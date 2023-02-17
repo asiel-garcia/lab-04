@@ -16,8 +16,9 @@ if __name__ == '__main__':
     #get IP address
     ip_address=0 
     """your code here"""
+    ip_address = socket.gethostbyname(socket.gethostname())
     #create a client object
-    client = mqtt.Client()
+    client = mqtt.Client("asielgar")
     
     #attach the on_connect() callback function defined above to the mqtt client
     client.on_connect = on_connect
@@ -41,11 +42,14 @@ if __name__ == '__main__':
 
     while True:
         #replace user with your USC username in all subscriptions
-        client.publish("user/ipinfo", f"{ip_address}")
+        client.publish("asielgar/ipinfo", f"{ip_address}")
         print("Publishing ip address")
         time.sleep(4)
 
         #get date and time 
         """your code here"""
+        now  = datetime.now()
         #publish date and time in their own topics
         """your code here"""
+        client.publish("asielgar/date", now.strftime("%Y-%m-%d"))
+        client.publish("asielgar/time", now.strftime("%H:%M:%S"))

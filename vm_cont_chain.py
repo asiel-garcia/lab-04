@@ -26,5 +26,6 @@ if __name__ == '__main__':
 	
 	client.loop_forever()
 	
+	#not needed
 	#client.message_callback_add("asielgar/pong", on_message_from_ping)
 	#client.on_message_from_ping=on_message_from_ping

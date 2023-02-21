@@ -12,17 +12,19 @@ def on_message(client, userdata, msg):
 	print("default callback - topic: " +msg.topic +"  msg: "+str(msg.payload, "utf-8"))
 
 def on_message_from_ping(client, userdata, message):
-	
-	number = int(message.payload)
-	time.sleep(1)
-	print("custom callback - pong: "+str(number))
-	client.publish(message.topic, number+1)
+	number = int(message.payload.decode()) + 1
+	print("custom callback - pong: "+f"{number}")
+	time.sleep(0.5)
+	client.publish("asielgar/pong", number)
 	
 if __name__ == '__main__':
 	client=mqtt.Client()
-	client.on_message = on_message
 	client.on_connect=on_connect
-	
+	client.on_message = on_message
+
 	client.connect("172.20.10.10", 1883, 60)
 	
 	client.loop_forever()
+	
+	#client.message_callback_add("asielgar/pong", on_message_from_ping)
+	#client.on_message_from_ping=on_message_from_ping
